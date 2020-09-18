@@ -1,6 +1,6 @@
 import {TaskRepository} from "../Infrastructure/Repositories/TaskRepository";
 import {Task} from "../Domain/Entities/Task";
-import {ITask} from "../Presentation/interfaces";
+import {ITask} from "../DTO/Task";
 
 export class TaskUseCases {
   private repository: TaskRepository

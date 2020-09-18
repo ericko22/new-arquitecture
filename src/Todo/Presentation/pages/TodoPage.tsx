@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from "react";
 import {TaskUseCasesFactory} from "../../UseCases/TaskUseCasesFactory";
 import {TaskList} from "../components/TaskList";
 import { CreateTask } from "../components/createTask";
-import {ITask} from "../interfaces";
+import {ITask} from "../../DTO/Task";
 
 export const TodoPage = () => {
   const [tasks, setTasks] = useState<ITask[]>([])

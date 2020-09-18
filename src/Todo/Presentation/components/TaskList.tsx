@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 import { Task } from "./Task";
-import {ITask} from "../interfaces";
+import {ITask} from "../../DTO/Task";
 
 interface Props {
   tasks: ITask[]
