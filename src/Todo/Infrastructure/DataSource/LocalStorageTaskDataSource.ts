@@ -1,5 +1,5 @@
 import {TaskDataSource} from "./TaskDataSource";
-import {Task} from "../Domain/Entities/Task";
+import {Task} from "../../Domain/Entities/Task";
 
 // @ts-ignore
 export class LocalStorageTaskDataSource extends TaskDataSource {
@@ -11,7 +11,7 @@ export class LocalStorageTaskDataSource extends TaskDataSource {
     else return LocalStorageTaskDataSource.instance
   }
 
-  private static localStorageToTasks(): Task[] {
+  private static localStorageToTasks(): any[] {
     const tasksStr = localStorage.getItem('tasks')
     if (tasksStr !== '') {
       return JSON.parse(tasksStr || '[]')
@@ -25,24 +25,24 @@ export class LocalStorageTaskDataSource extends TaskDataSource {
     localStorage.setItem('tasks', JSON.stringify(tasks))
   }
 
-  get(): Promise<Task[]> {
+  get(): Promise<any[]> {
     return Promise.resolve(LocalStorageTaskDataSource.localStorageToTasks())
   }
 
   insert(data: Task): Promise<Task> {
     let tasks = LocalStorageTaskDataSource.localStorageToTasks()
-    tasks = [...tasks, {...data, id: `${tasks.length + 1}`}]
+    tasks = [...tasks, data]
     localStorage.setItem('tasks', JSON.stringify(tasks))
     return Promise.resolve(data)
   }
 
   update(taskId: string, data: Task): Promise<Task> {
-    let tasks = LocalStorageTaskDataSource.localStorageToTasks()
-    let tasksFound = [...tasks].find(task => task.id === taskId)
-    const newTask = {...tasksFound, ...data}
-    tasks = [...tasks].map(task => task.id === taskId ? newTask : task)
+    let tasks: Task[] = LocalStorageTaskDataSource.localStorageToTasks()
+    let tasksFound: Task | undefined = [...tasks].find(task => task.Id() === taskId )
+    // @ts-ignore
+    tasks = [...tasks].map(task => task.Id() === taskId ? {...tasksFound, ...data} : task)
     localStorage.setItem('tasks', JSON.stringify(tasks))
-    return Promise.resolve(newTask)
+    return Promise.resolve(data)
   }
 
 }

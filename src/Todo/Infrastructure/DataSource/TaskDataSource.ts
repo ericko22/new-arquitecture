@@ -1,4 +1,4 @@
-import {Task} from "../Domain/Entities/Task";
+import {Task} from "../../Domain/Entities/Task";
 
 export abstract class TaskDataSource {
 
@@ -13,5 +13,5 @@ export abstract class TaskDataSource {
 
   abstract update(taskId: string, data: Task): Promise<Task>
 
-  abstract get(): Promise<Task[]>
+  abstract get(): Promise<any[]>
 }

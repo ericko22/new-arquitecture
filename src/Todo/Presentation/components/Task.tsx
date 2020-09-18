@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import {Task as ITask} from "../../Domain/Entities/Task";
+import { ITask } from "../interfaces";
 
 interface Props {
   task: ITask

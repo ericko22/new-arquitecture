@@ -1,7 +1,7 @@
 import {TaskUseCases} from "./TaskUseCases";
 import {TaskFactory} from "../Domain/Entities/TaskFactory";
-import {LocalStorageTaskDataSource} from "../DataSource/LocalStorageTaskDataSource";
-import {LocalStorageTaskRepository} from "../Repositories/LocalStorageTaskRepository";
+import {LocalStorageTaskDataSource} from "../Infrastructure/DataSource/LocalStorageTaskDataSource";
+import {LocalStorageTaskRepository} from "../Infrastructure/Repositories/LocalStorageTaskRepository";
 
 export class TaskUseCasesFactory {
 

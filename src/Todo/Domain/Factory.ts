@@ -1,5 +1,3 @@
-import {Task} from "./Entities/Task";
-
 export interface Factory {
-  execute(data: any): Task
+  execute(data: any): any
 }

@@ -1,5 +1,6 @@
-import {TaskRepository} from "../Repositories/TaskRepository";
+import {TaskRepository} from "../Infrastructure/Repositories/TaskRepository";
 import {Task} from "../Domain/Entities/Task";
+import {ITask} from "../Presentation/interfaces";
 
 export class TaskUseCases {
   private repository: TaskRepository
@@ -12,8 +13,9 @@ export class TaskUseCases {
     return await this.repository.changeStatus(taskId, status)
   }
 
-  async create(data: Task): Promise<Task> {
-    return await this.repository.create(data)
+  async create(data: ITask): Promise<ITask> {
+    const task = await this.repository.create(data)
+    return task.toJson()
   }
 
   async delete(taskId: string): Promise<void> {
@@ -24,8 +26,9 @@ export class TaskUseCases {
     await this.repository.deleteComplete()
   }
 
-  async get(): Promise<Task[]> {
-    return await this.repository.get()
+  async get(): Promise<ITask[]> {
+    const list = await this.repository.get()
+    return [...list].map((task) => task.toJson())
   }
 
 }

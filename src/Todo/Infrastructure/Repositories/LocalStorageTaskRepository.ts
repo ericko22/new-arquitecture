@@ -1,7 +1,7 @@
 import {TaskRepository} from "./TaskRepository";
 import {TaskDataSource} from "../DataSource/TaskDataSource";
-import {Task} from "../Domain/Entities/Task";
-import {Factory} from "../Domain/Factory";
+import {Task} from "../../Domain/Entities/Task";
+import {Factory} from "../../Domain/Factory";
 
 export class LocalStorageTaskRepository implements TaskRepository {
 
@@ -29,15 +29,16 @@ export class LocalStorageTaskRepository implements TaskRepository {
 
   async deleteComplete(): Promise<void> {
     let tasks = await this.dataSource.get()
-    for await (const {id, status} of tasks){
-      if (status && id != null) {
-        await this.delete(id)
+    for await (const task of tasks){
+      if (task.isComplete()) {
+        await this.delete(task.Id())
       }
     }
   }
 
   async get(): Promise<Task[]> {
-    return await this.dataSource.get()
+    const list = await this.dataSource.get()
+    return [...list].map<Task>((task) => this.factory.execute(task))
   }
 
 }
