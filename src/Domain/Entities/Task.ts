@@ -7,9 +7,9 @@ export class Task extends Entity {
   private createdAt: Date
   private readonly status: boolean
 
-  constructor(createdAt: Date, name: string, status: boolean) {
+  constructor(createdAt: Date, name: string, status: boolean, id?: string) {
     super()
-    this.id = uuid.v4()
+    this.id = !!id ? id : uuid.v4()
     this.name = name
     this.status = status
     this.createdAt = createdAt

@@ -4,13 +4,14 @@ import {ITask} from "../../../DTO/Task";
 
 interface Props {
   tasks: ITask[]
+  onComplete: (taskId: string) => void
 }
 
-export const TaskList: FC<Props> = ({tasks}) => {
+export const TaskList: FC<Props> = ({tasks, onComplete}) => {
   return (
     <ul>
       {
-        !!tasks && tasks.map((task) => <Task key={task.id} task={task}/>)
+        !!tasks && tasks.map((task) => <Task onComplete={onComplete} key={task.id} task={task}/>)
       }
     </ul>
   )

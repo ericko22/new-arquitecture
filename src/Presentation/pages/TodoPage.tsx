@@ -3,7 +3,7 @@ import {TaskList} from "../components/Task/TaskList";
 import {CreateTask} from "../components/Task/CreateTask";
 import {useDispatch, useSelector} from "react-redux";
 import {ITask} from "../../DTO/Task";
-import {createTask, listTasks} from "../store/task/actions";
+import {createTask, listTasks, completeTask} from "../store/task/actions";
 
 export const TodoPage = () => {
   const dispatch = useDispatch()
@@ -14,6 +14,9 @@ export const TodoPage = () => {
     dispatch(createTask(data))
   }
 
+  const handleComplete = async (taskId: string) => await dispatch(completeTask(taskId))
+  const handleCleanTasks = async () => {}
+
   useEffect(() => {
     dispatch(listTasks())
   }, [dispatch])
@@ -22,7 +25,8 @@ export const TodoPage = () => {
     <Fragment>
       <CreateTask onSubmit={handleSubmit}/>
       <h1>Lista de tareas</h1>
-      <TaskList tasks={tasks}/>
+      <button onClick={handleCleanTasks}>Limpiar tareas</button>
+      <TaskList tasks={tasks} onComplete={handleComplete}/>
     </Fragment>
   )
 }

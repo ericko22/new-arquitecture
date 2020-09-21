@@ -1,7 +1,8 @@
 import {TaskRepository} from "../../Infrastructure/Repositories/TaskRepository";
 import {ITask} from "../../DTO/Task";
+import {UseCase} from "../UseCase";
 
-export class CreateTaskUseCases {
+export class CreateTaskUseCase implements UseCase {
   private repository: TaskRepository
 
   constructor(repository: TaskRepository) {

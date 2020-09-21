@@ -11,7 +11,7 @@ export abstract class TaskDataSource {
 
   abstract delete(taskId: string): void
 
-  abstract update(taskId: string, data: Task): Promise<Task>
+  abstract update(taskId: string, data: any): Promise<Task>
 
   abstract get(): Promise<any[]>
 }

@@ -14,8 +14,10 @@ export class LocalStorageTaskRepository implements TaskRepository {
   }
 
   async changeStatus(taskId: string, status: boolean): Promise<Task> {
-    const task = this.factory.execute({status})
-    return await this.dataSource.update(taskId, task)
+    const list = await this.get()
+    const taskFound = list.find((task) => task.getId() === taskId)
+    const updated = await this.dataSource.update(taskId, {...taskFound, status})
+    return this.factory.execute(updated)
   }
 
   async create(data: any): Promise<Task> {
