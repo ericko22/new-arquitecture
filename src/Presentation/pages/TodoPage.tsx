@@ -3,7 +3,7 @@ import {TaskList} from "../components/Task/TaskList";
 import {CreateTask} from "../components/Task/CreateTask";
 import {useDispatch, useSelector} from "react-redux";
 import {ITask} from "../../DTO/Task";
-import {createTask, listTasks, completeTask} from "../store/task/actions";
+import {createTask, listTasks, completeTask, cleanComplete} from "../store/task/actions";
 
 export const TodoPage = () => {
   const dispatch = useDispatch()
@@ -15,7 +15,7 @@ export const TodoPage = () => {
   }
 
   const handleComplete = async (taskId: string) => await dispatch(completeTask(taskId))
-  const handleCleanTasks = async () => {}
+  const handleCleanTasks = async () => await dispatch(cleanComplete())
 
   useEffect(() => {
     dispatch(listTasks())

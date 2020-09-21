@@ -19,3 +19,8 @@ export const completeTask = (taskId: string) => async (dispatch: any) => {
   const payload = { taskId, task }
   dispatch({type: COMPLETE_TASK, payload})
 }
+
+export const cleanComplete = () => async (dispatch: any) => {
+  await TaskUseCases.cleanComplete()
+  dispatch(listTasks())
+}

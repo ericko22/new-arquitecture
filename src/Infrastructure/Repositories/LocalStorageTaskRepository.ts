@@ -30,17 +30,16 @@ export class LocalStorageTaskRepository implements TaskRepository {
   }
 
   async deleteComplete(): Promise<void> {
-    let tasks = await this.dataSource.get()
+    let tasks = await this.get()
     for await (const task of tasks){
       if (task.isComplete()) {
-        await this.delete(task.Id())
+        await this.delete(task.getId())
       }
     }
   }
 
   async get(): Promise<Task[]> {
-    const list = await this.dataSource.get()
-    return [...list].map<Task>((task) => this.factory.execute(task))
+    return await this.dataSource.get()
   }
 
 }

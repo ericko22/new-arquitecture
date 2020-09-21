@@ -1,46 +1,47 @@
 import {TaskDataSource} from "./TaskDataSource";
 import {Task} from "../../Domain/Entities/Task";
+import {Factory} from "../../Domain/Factory";
 
-// @ts-ignore
 export class LocalStorageTaskDataSource extends TaskDataSource {
 
-  private static instance: LocalStorageTaskDataSource
+  taskFactory: Factory
 
-  static getInstance() {
-    if (!LocalStorageTaskDataSource.instance) return new LocalStorageTaskDataSource()
-    else return LocalStorageTaskDataSource.instance
+  constructor(taskFactory: Factory) {
+    super();
+    this.taskFactory = taskFactory
   }
 
-  private static localStorageToTasks(): any[] {
+  private localStorageToTasks = (): Task[] => {
     const tasksStr = localStorage.getItem('tasks')
     if (tasksStr !== '') {
-      return JSON.parse(tasksStr || '[]')
+      const data = JSON.parse(tasksStr || '[]')
+      return data.map((task: Task) => this.taskFactory.execute(task))
     }
     return []
-  }
+  };
 
   delete(taskId: string): void {
-    let tasks = LocalStorageTaskDataSource.localStorageToTasks()
-    tasks = [...tasks].filter(task => task.id !== taskId)
+    let tasks = this.localStorageToTasks()
+    tasks = [...tasks].filter(task => task.getId() !== taskId)
     localStorage.setItem('tasks', JSON.stringify(tasks))
   }
 
-  get(): Promise<any[]> {
-    return Promise.resolve(LocalStorageTaskDataSource.localStorageToTasks())
+  async get(): Promise<any[]> {
+    return this.localStorageToTasks()
   }
 
-  insert(data: Task): Promise<Task> {
-    let tasks = LocalStorageTaskDataSource.localStorageToTasks()
+  async insert(data: Task): Promise<Task> {
+    let tasks = this.localStorageToTasks()
     tasks = [...tasks, data]
     localStorage.setItem('tasks', JSON.stringify(tasks))
-    return Promise.resolve(data)
+    return data
   }
 
-  update(taskId: string, data: Task): Promise<any> {
-    let tasks: any[] = LocalStorageTaskDataSource.localStorageToTasks()
+  async update(taskId: string, data: Task): Promise<any> {
+    let tasks: any[] = this.localStorageToTasks()
     tasks = [...tasks].map(task => task.id === taskId ? data : task)
     localStorage.setItem('tasks', JSON.stringify(tasks))
-    return Promise.resolve(data)
+    return data
   }
 
 }
