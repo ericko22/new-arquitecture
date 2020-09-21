@@ -1,21 +1,21 @@
 import React, {Fragment, useEffect, useState} from "react";
-import {TaskUseCasesFactory} from "../../UseCases/TaskUseCasesFactory";
-import {TaskList} from "../components/TaskList";
-import { CreateTask } from "../components/createTask";
+import UseCases from "../../UseCases";
+import {TaskList} from "../components/Task/TaskList";
+import { CreateTask } from "../components/Task/CreateTask";
 import {ITask} from "../../DTO/Task";
 
 export const TodoPage = () => {
   const [tasks, setTasks] = useState<ITask[]>([])
-  const useCases = TaskUseCasesFactory.execute()
+  const {create, get} = UseCases.task
 
   const handleSubmit = async (name: string) => {
-    const task = await useCases.create({name, status: false, createdAt: new Date()})
+    const task = await create({name, status: false, createdAt: new Date()})
     setTasks([...tasks, {...task}])
   }
 
   useEffect(() => {
-    useCases.get().then((tasks) => setTasks(tasks))
-  }, [])
+    get().then((tasks) => setTasks(tasks))
+  }, [get])
 
   return (
     <Fragment>

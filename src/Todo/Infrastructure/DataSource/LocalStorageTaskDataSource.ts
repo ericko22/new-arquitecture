@@ -38,9 +38,9 @@ export class LocalStorageTaskDataSource extends TaskDataSource {
 
   update(taskId: string, data: Task): Promise<Task> {
     let tasks: Task[] = LocalStorageTaskDataSource.localStorageToTasks()
-    let tasksFound: Task | undefined = [...tasks].find(task => task.Id() === taskId )
+    let tasksFound: Task | undefined = [...tasks].find(task => task.getId() === taskId )
     // @ts-ignore
-    tasks = [...tasks].map(task => task.Id() === taskId ? {...tasksFound, ...data} : task)
+    tasks = [...tasks].map(task => task.getId() === taskId ? {...tasksFound, ...data} : task)
     localStorage.setItem('tasks', JSON.stringify(tasks))
     return Promise.resolve(data)
   }

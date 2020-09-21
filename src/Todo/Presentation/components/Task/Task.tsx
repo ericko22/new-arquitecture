@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import { ITask } from "../../DTO/Task";
+import { ITask } from "../../../DTO/Task";
 
 interface Props {
   task: ITask

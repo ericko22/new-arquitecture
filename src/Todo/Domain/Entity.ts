@@ -1,24 +1,12 @@
-export class Entity {
+import {ITask} from "../DTO/Task";
 
-  constructor(properties = {}) {
-    Object.keys(properties).forEach((key:string) => {
-      // @ts-ignore
-      return this[`_${key}`] = properties[key]
-    })
-    Object.defineProperty(this, '_properties', {
-      value: properties,
-      writable: false,
-      enumerable: false,
-      configurable: false
-    })
-  }
+export class Entity {
 
   private static anemicInstanceToObject (obj: any) {
     return Object.keys(obj)
-      .map(key => key.replace('_', ''))
-      .filter(key => obj._properties.hasOwnProperty(key))
+      .filter(key => obj.hasOwnProperty(key))
       .reduce((result:any, key) => {
-        result[key] = obj._properties[key]
+        result[key] = obj[key]
         return result
       }, {})
   }
@@ -35,7 +23,7 @@ export class Entity {
     )
   }
 
-  toJson() {
+  toJson(): ITask {
     return Entity.mapValuesToPlainObjects(
       Entity.anemicInstanceToObject(this)
     )

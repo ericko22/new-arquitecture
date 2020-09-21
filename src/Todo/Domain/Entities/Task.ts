@@ -1,17 +1,26 @@
-import {Entity} from "./Entity";
+import {Entity} from "../Entity"
+import * as uuid from 'uuid'
 
-export class Task extends Entity{
-  private readonly id?: string = ''
-  private name: string = ''
-  private createdAt: Date = new Date()
-  private status: boolean = false
+export class Task extends Entity {
+  private readonly id?: string
+  private name: string
+  private createdAt: Date
+  private readonly status: boolean
 
-  Id(): string {
+  constructor(createdAt: Date, name: string, status: boolean) {
+    super()
+    this.id = uuid.v4()
+    this.name = name
+    this.status = status
+    this.createdAt = createdAt
+  }
+
+  getId(): string {
     return this.id !== undefined ? this.id : ''
   }
 
   isComplete() {
-    return this.id !== null && this.id
+    return this.id !== null && this.status
   }
 
 }
