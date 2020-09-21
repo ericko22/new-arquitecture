@@ -8,9 +8,10 @@ export const CreateTask: FC<Props> = ({onSubmit}) => {
   const [task, setTask ] = useState<string>('')
 
   const handleChange = ({target}: any) => setTask(target.value)
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault()
-    onSubmit(task)
+    await onSubmit(task)
+    setTask('')
   }
 
   return (

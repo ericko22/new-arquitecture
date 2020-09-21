@@ -1,3 +1,5 @@
 import task from './Task'
 
-export default {task}
+export default {
+  task
+}
