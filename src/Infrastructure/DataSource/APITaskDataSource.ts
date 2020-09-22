@@ -29,13 +29,13 @@ export class APITaskDataSource extends TaskDataSource {
   }
 
   async insert(data: Task): Promise<Task> {
-    const {data: response} = await this.axios.post<Task>('/tasks', data)
-    return response;
+    const {data: response} = await this.axios.post('/tasks', data)
+    return this.taskFactory.execute(response)
   }
 
   async update(taskId: string, data: Task): Promise<Task> {
     const {data: response} = await this.axios.put(`/tasks/${taskId}`, data)
-    return [...response].find(task => task.id === taskId)
+    return this.taskFactory.execute([...response].find(task => task.id === taskId))
   }
 
 }

@@ -3,8 +3,10 @@ import {GetTaskUseCase} from "./GetTaskUseCase";
 import { ChangeStatusUseCase } from "./ChangeStatusUseCase";
 import {CleanCompleteUseCase} from "./CleanCompleteUseCase";
 import {APITaskRepositoryFactory} from "../../Infrastructure/Repositories/APITaskRepositoryFactory";
+import {LocalStorageTaskRepositoryFactory} from "../../Infrastructure/Repositories/LocalStorageTaskRepositoryFactory";
 
 const repository = APITaskRepositoryFactory.execute()
+// const repository = LocalStorageTaskRepositoryFactory.execute()
 
 const create = new CreateTaskUseCase(repository)
 const get = new GetTaskUseCase(repository)

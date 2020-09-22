@@ -1,6 +1,7 @@
 import {TaskDataSource} from "./TaskDataSource";
 import {Task} from "../../Domain/Entities/Task";
 import {Factory} from "../../Domain/Factory";
+import * as uuid from "uuid";
 
 export class LocalStorageTaskDataSource extends TaskDataSource {
 
@@ -32,9 +33,10 @@ export class LocalStorageTaskDataSource extends TaskDataSource {
 
   async insert(data: Task): Promise<Task> {
     let tasks = this.localStorageToTasks()
-    tasks = [...tasks, data]
+    const task = this.taskFactory.execute(data)
+    tasks = [...tasks, task]
     localStorage.setItem('tasks', JSON.stringify(tasks))
-    return data
+    return task
   }
 
   async update(taskId: string, data: Task): Promise<any> {
