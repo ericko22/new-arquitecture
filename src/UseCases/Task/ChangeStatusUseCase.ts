@@ -1,4 +1,4 @@
-import {TaskRepository} from "../../Infrastructure/Repositories/TaskRepository";
+import {ITaskRepository} from "../../Infrastructure/Repositories/ITaskRepository";
 import {ITask} from "../../DTO/Task";
 import {UseCase} from "../UseCase";
 
@@ -8,9 +8,9 @@ interface Params {
 }
 
 export class ChangeStatusUseCase implements UseCase {
-  private repository: TaskRepository
+  private repository: ITaskRepository
 
-  constructor(repository: TaskRepository) {
+  constructor(repository: ITaskRepository) {
     this.repository = repository
   }
 

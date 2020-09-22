@@ -1,15 +1,15 @@
 import {CreateTaskUseCase} from "./CreateTaskUseCase";
-import { LocalStorageTaskRepositoryFactory } from "../../Infrastructure/Repositories/LocalStorageTaskRepositoryFactory";
 import {GetTaskUseCase} from "./GetTaskUseCase";
 import { ChangeStatusUseCase } from "./ChangeStatusUseCase";
 import {CleanCompleteUseCase} from "./CleanCompleteUseCase";
+import {APITaskRepositoryFactory} from "../../Infrastructure/Repositories/APITaskRepositoryFactory";
 
-const localStorageRepository = LocalStorageTaskRepositoryFactory.execute()
+const repository = APITaskRepositoryFactory.execute()
 
-const create = new CreateTaskUseCase(localStorageRepository)
-const get = new GetTaskUseCase(localStorageRepository)
-const changeStatus = new ChangeStatusUseCase(localStorageRepository)
-const cleanComplete = new CleanCompleteUseCase(localStorageRepository)
+const create = new CreateTaskUseCase(repository)
+const get = new GetTaskUseCase(repository)
+const changeStatus = new ChangeStatusUseCase(repository)
+const cleanComplete = new CleanCompleteUseCase(repository)
 
 export default {
   create: create.execute.bind(create),

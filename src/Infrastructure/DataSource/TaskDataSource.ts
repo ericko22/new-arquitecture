@@ -1,6 +1,18 @@
 import {Task} from "../../Domain/Entities/Task";
+import {Factory} from "../../Domain/Factory";
 
 export abstract class TaskDataSource {
+
+  protected taskFactory: Factory
+
+  constructor(taskFactory: Factory) {
+    this.taskFactory = taskFactory
+  }
+
+  protected static instance: TaskDataSource
+
+  // @ts-ignore
+  static abstract getInstance(taskFactory: Factory): TaskDataSource
 
   abstract insert(data: Task): Promise<Task>
 
@@ -8,5 +20,5 @@ export abstract class TaskDataSource {
 
   abstract update(taskId: string, data: any): Promise<Task>
 
-  abstract get(): Promise<any[]>
+  abstract get(): Promise<Task[]>
 }

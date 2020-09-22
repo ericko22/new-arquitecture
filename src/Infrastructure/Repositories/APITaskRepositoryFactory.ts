@@ -1,12 +1,12 @@
 import {TaskEntityFactory} from "../../Domain/Entities/TaskEntityFactory"
-import {LocalStorageTaskDataSource} from "../DataSource/LocalStorageTaskDataSource"
 import {TaskRepository} from "./TaskRepository"
+import {APITaskDataSource} from "../DataSource/APITaskDataSource";
 
-export class LocalStorageTaskRepositoryFactory {
+export class APITaskRepositoryFactory {
 
   static execute() {
     const factory = new TaskEntityFactory()
-    const dataSource = LocalStorageTaskDataSource.getInstance(factory)
+    const dataSource = APITaskDataSource.getInstance(factory)
     return new TaskRepository(dataSource, factory)
   }
 

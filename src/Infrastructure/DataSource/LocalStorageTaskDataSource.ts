@@ -4,11 +4,11 @@ import {Factory} from "../../Domain/Factory";
 
 export class LocalStorageTaskDataSource extends TaskDataSource {
 
-  taskFactory: Factory
-
-  constructor(taskFactory: Factory) {
-    super();
-    this.taskFactory = taskFactory
+  static getInstance(taskFactory: Factory) {
+    if (!LocalStorageTaskDataSource.instance) {
+      LocalStorageTaskDataSource.instance = new LocalStorageTaskDataSource(taskFactory)
+    }
+    return LocalStorageTaskDataSource.instance
   }
 
   private localStorageToTasks = (): Task[] => {
@@ -18,7 +18,7 @@ export class LocalStorageTaskDataSource extends TaskDataSource {
       return data.map((task: Task) => this.taskFactory.execute(task))
     }
     return []
-  };
+  }
 
   delete(taskId: string): void {
     let tasks = this.localStorageToTasks()
@@ -26,7 +26,7 @@ export class LocalStorageTaskDataSource extends TaskDataSource {
     localStorage.setItem('tasks', JSON.stringify(tasks))
   }
 
-  async get(): Promise<any[]> {
+  async get(): Promise<Task[]> {
     return this.localStorageToTasks()
   }
 
