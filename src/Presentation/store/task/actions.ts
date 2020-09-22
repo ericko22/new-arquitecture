@@ -14,8 +14,8 @@ export const createTask = (data: ITask) => async (dispatch: any) => {
   dispatch({type: CREATE_TASK, payload: task})
 }
 
-export const completeTask = (taskId: string) => async (dispatch: any) => {
-  const task = await TaskUseCases.completeTask(taskId)
+export const ChangeStatus = (taskId: string, value: boolean) => async (dispatch: any) => {
+  const task = await TaskUseCases.changeStatus({taskId, value})
   const payload = { taskId, task }
   dispatch({type: COMPLETE_TASK, payload})
 }

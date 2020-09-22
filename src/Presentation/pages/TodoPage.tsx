@@ -1,9 +1,11 @@
-import React, {Fragment, useEffect} from "react";
+import React, {useEffect} from "react";
 import {TaskList} from "../components/Task/TaskList";
 import {CreateTask} from "../components/Task/CreateTask";
 import {useDispatch, useSelector} from "react-redux";
 import {ITask} from "../../DTO/Task";
-import {createTask, listTasks, completeTask, cleanComplete} from "../store/task/actions";
+import {createTask, listTasks, ChangeStatus, cleanComplete} from "../store/task/actions";
+import {Grid, Icon, Button, Card, CardHeader} from "@material-ui/core";
+import { TodoAppBar } from "../components/TodoAppBar";
 
 export const TodoPage = () => {
   const dispatch = useDispatch()
@@ -14,7 +16,7 @@ export const TodoPage = () => {
     dispatch(createTask(data))
   }
 
-  const handleComplete = async (taskId: string) => await dispatch(completeTask(taskId))
+  const handleComplete = async (taskId: string, value: boolean) => await dispatch(ChangeStatus(taskId, value))
   const handleCleanTasks = async () => await dispatch(cleanComplete())
 
   useEffect(() => {
@@ -22,11 +24,21 @@ export const TodoPage = () => {
   }, [dispatch])
 
   return (
-    <Fragment>
-      <CreateTask onSubmit={handleSubmit}/>
-      <h1>Lista de tareas</h1>
-      <button onClick={handleCleanTasks}>Limpiar tareas</button>
-      <TaskList tasks={tasks} onComplete={handleComplete}/>
-    </Fragment>
+    <Grid container direction="column" alignItems="center" >
+      <Grid item container component={Card} lg={4} md={4} sm={6} xs={12} direction="column" spacing={2} style={{minHeight: 'calc(100vh - 25px)', marginTop: 2}} elevation={3}>
+        <CardHeader component={TodoAppBar} />
+        <Grid item>
+          <CreateTask onSubmit={handleSubmit}/>
+        </Grid>
+        <Grid item>
+          <Button fullWidth endIcon={<Icon>clear_all</Icon>} variant="outlined" onClick={handleCleanTasks}>
+            Limpiar tareas
+          </Button>
+        </Grid>
+        <Grid item>
+          <TaskList tasks={tasks} onComplete={handleComplete}/>
+        </Grid>
+      </Grid>
+    </Grid>
   )
 }
