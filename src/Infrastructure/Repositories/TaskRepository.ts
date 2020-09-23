@@ -1,14 +1,14 @@
 import {ITaskRepository} from "./ITaskRepository";
-import {TaskDataSource} from "../DataSource/TaskDataSource";
+import {DataSource} from "../DataSource/DataSource";
 import {Task} from "../../Domain/Entities/Task";
 import {Factory} from "../../Domain/Factory";
 
 export class TaskRepository implements ITaskRepository {
 
-  private dataSource: TaskDataSource
+  private dataSource: DataSource<Task>
   private factory: Factory
 
-  constructor(dataSource: TaskDataSource, factory: Factory) {
+  constructor(dataSource: DataSource<Task>, factory: Factory) {
     this.dataSource = dataSource
     this.factory = factory
   }
@@ -39,7 +39,9 @@ export class TaskRepository implements ITaskRepository {
   }
 
   async get(): Promise<Task[]> {
-    return await this.dataSource.get()
+    let list = await this.dataSource.get()
+    list = list.map(task => this.factory.execute(task))
+    return list
   }
 
 }
