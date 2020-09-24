@@ -1,7 +1,7 @@
 import {ITaskRepository} from "./ITaskRepository";
-import {DataSource} from "../DataSource/DataSource";
-import {Task} from "../../Domain/Entities/Task";
-import {Factory} from "../../Domain/Factory";
+import {DataSource} from "../../DataSource/DataSource";
+import {Task} from "../../../Domain/Entities/Task";
+import {Factory} from "../../../Domain/Factory";
 
 export class TaskRepository implements ITaskRepository {
 

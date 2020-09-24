@@ -1,5 +1,5 @@
-import {TaskEntityFactory} from "../../Domain/Entities/TaskEntityFactory"
-import {LocalStorageDataSource} from "../DataSource/LocalStorageDataSource"
+import {TaskEntityFactory} from "../../../Domain/Entities/TaskEntityFactory"
+import {LocalStorageDataSource} from "../../DataSource/LocalStorageDataSource"
 import {TaskRepository} from "./TaskRepository"
 
 export class LocalStorageTaskRepositoryFactory {
