@@ -1,4 +1,4 @@
-import {Task} from "../../Domain/Entities/Task";
+import {Task} from "../../../Domain/Entities/Task";
 
 export interface ITaskRepository {
   get(): Promise<Task[]>

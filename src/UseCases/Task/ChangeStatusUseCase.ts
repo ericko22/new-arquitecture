@@ -1,4 +1,4 @@
-import {ITaskRepository} from "../../Infrastructure/Repositories/ITaskRepository";
+import {ITaskRepository} from "../../Infrastructure/Repositories/Task/ITaskRepository";
 import {ITask} from "../../DTO/Task";
 import {UseCase} from "../UseCase";
 

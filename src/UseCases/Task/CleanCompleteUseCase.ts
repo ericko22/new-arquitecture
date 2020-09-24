@@ -1,4 +1,4 @@
-import {ITaskRepository} from "../../Infrastructure/Repositories/ITaskRepository";
+import {ITaskRepository} from "../../Infrastructure/Repositories/Task/ITaskRepository";
 import {UseCase} from "../UseCase";
 
 export class CleanCompleteUseCase implements UseCase {
