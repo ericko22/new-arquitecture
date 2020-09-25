@@ -1,40 +1,39 @@
 import {DataSource} from "./DataSource";
-import {Factory} from "../../Domain/Factory";
 import axios, {AxiosInstance} from "axios";
 
-export class APIDataSource<T> extends DataSource<T> {
+export class APIDataSource extends DataSource {
 
   private axios: AxiosInstance
 
-  private constructor(factory: Factory, uri: string) {
-    super(factory, uri);
+  private constructor(uri: string) {
+    super(uri);
     this.axios = axios.create({
       baseURL: 'http://localhost:5000/api'
     })
   }
 
-  static getInstance(factory: Factory, uri: string) {
-    if (!APIDataSource.instance) APIDataSource.instance = new APIDataSource(factory, uri)
+  static getInstance(uri: string) {
+    if (!APIDataSource.instance) APIDataSource.instance = new APIDataSource(uri)
     return APIDataSource.instance
   }
 
-  async delete(taskId: string): Promise<void> {
-    await this.axios.delete(`/${this.referenceName}/${taskId}`)
+  async delete(entityId: string): Promise<void> {
+    await this.axios.delete(`/${this.referenceName}/${entityId}`)
   }
 
-  async get(): Promise<T[]> {
-    const {data} = await this.axios.get<T[]>(`/${this.referenceName}`)
-    return [...data].map((task) => this.factory.execute(task))
+  async get(): Promise<any[]> {
+    const {data} = await this.axios.get<any[]>(`/${this.referenceName}`)
+    return data
   }
 
-  async insert(data: T): Promise<T> {
+  async insert(data: any): Promise<any> {
     const {data: response} = await this.axios.post(`/${this.referenceName}`, data)
-    return this.factory.execute(response)
+    return response
   }
 
-  async update(taskId: string, data: T): Promise<T> {
-    const {data: response} = await this.axios.put(`/${this.referenceName}/${taskId}`, data)
-    return this.factory.execute([...response].find(task => task.id === taskId))
+  async update(entity: string, data: any): Promise<any> {
+    const {data: response} = await this.axios.put(`/${this.referenceName}/${entity}`, data)
+    return response
   }
 
 }

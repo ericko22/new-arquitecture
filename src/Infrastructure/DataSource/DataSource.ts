@@ -1,25 +1,23 @@
-import {Factory} from "../../Domain/Factory";
+import {Entity} from "../../Domain/Entity";
 
-export abstract class DataSource<T> {
+export abstract class DataSource {
 
-  protected factory: Factory
   protected referenceName: string
 
-  constructor(factory: Factory, referenceName: string) {
-    this.factory = factory
+  constructor(referenceName: string) {
     this.referenceName = referenceName
   }
 
-  protected static instance: DataSource<any>
+  protected static instance: DataSource
 
   // @ts-ignore
-  static abstract getInstance(factory: Factory, referenceName: string): DataSource<T>
+  static abstract getInstance(referenceName: string): DataSource
 
-  abstract insert(data: T): Promise<T>
+  abstract insert(data: any): Promise<any>
 
   abstract delete(taskId: string): void
 
-  abstract update(taskId: string, data: any): Promise<T>
+  abstract update(taskId: string, data: any): Promise<any>
 
-  abstract get(): Promise<T[]>
+  abstract get(): Promise<any[]>
 }

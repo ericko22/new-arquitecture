@@ -1,6 +1,7 @@
 import {ITaskRepository} from "../../../Infrastructure/Repositories/Task/ITaskRepository";
 import {ITask} from "../../../DTO/Task";
 import {UseCase} from "../UseCase";
+import {TaskMapper} from "../../../Mappers/TaskMapper";
 
 interface Params {
   taskId: string,
@@ -16,7 +17,7 @@ export class ChangeStatusUseCase implements UseCase {
 
   async execute({taskId, value}: Params): Promise<ITask> {
     const task = await this.repository.changeStatus(taskId, value)
-    return task.toJson()
+    return TaskMapper.toDTO(task)
   }
 
 }

@@ -1,6 +1,6 @@
 import {IUserRepository} from "./IUserRepository";
 import {User} from "../../../Domain/Entities/User";
-import {Factory} from "../../../Domain/Factory";
+import {UserMapper} from "../../../Mappers/UserMapper";
 
 const user = {
   id: '1',
@@ -10,14 +10,8 @@ const user = {
 
 export class UserRepository implements IUserRepository{
 
-  private factory: Factory
-
-  constructor(factory: Factory) {
-    this.factory = factory
-  }
-
   get(): User {
-    return this.factory.execute(user)
+    return UserMapper.toDomain(user)
   }
 
 }
