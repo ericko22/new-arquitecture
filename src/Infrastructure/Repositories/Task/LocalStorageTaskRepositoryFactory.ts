@@ -1,4 +1,4 @@
-import {TaskEntityFactory} from "../../../Domain/Entities/TaskEntityFactory"
+import {TaskEntityFactory} from "../../../Domain/Entities/Task/TaskEntityFactory"
 import {LocalStorageDataSource} from "../../DataSource/LocalStorageDataSource"
 import {TaskRepository} from "./TaskRepository"
 

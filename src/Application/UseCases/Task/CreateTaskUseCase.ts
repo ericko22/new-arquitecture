@@ -1,5 +1,5 @@
-import {ITaskRepository} from "../../Infrastructure/Repositories/Task/ITaskRepository";
-import {ITask} from "../../DTO/Task";
+import {ITaskRepository} from "../../../Infrastructure/Repositories/Task/ITaskRepository";
+import {ITask} from "../../../DTO/Task";
 import {UseCase} from "../UseCase";
 
 export class CreateTaskUseCase implements UseCase {
@@ -11,7 +11,6 @@ export class CreateTaskUseCase implements UseCase {
 
   async execute(data: ITask): Promise<ITask> {
     const task = await this.repository.create(data)
-    console.log(task)
     return task.toJson()
   }
 

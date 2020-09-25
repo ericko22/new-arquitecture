@@ -1,5 +1,5 @@
-import {ITaskRepository} from "../../Infrastructure/Repositories/Task/ITaskRepository";
-import {ITask} from "../../DTO/Task";
+import {ITaskRepository} from "../../../Infrastructure/Repositories/Task/ITaskRepository";
+import {ITask} from "../../../DTO/Task";
 import {UseCase} from "../UseCase";
 
 interface Params {

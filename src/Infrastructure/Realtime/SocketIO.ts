@@ -1,9 +1,9 @@
 import io from 'socket.io-client'
 
 export class SocketIO {
-  
+
   private url = 'ws://localhost:3001'
-  private socket: SocketIOClient.Socket
+  private readonly socket: SocketIOClient.Socket
   private static instance: SocketIO
 
   private constructor() {
@@ -18,7 +18,7 @@ export class SocketIO {
   }
 
   static getInstance = () => {
-    if(!SocketIO.instance) new SocketIO()
+    if(!SocketIO.instance) SocketIO.instance = new SocketIO()
     return SocketIO.instance
   }
 

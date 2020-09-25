@@ -1,5 +1,3 @@
-import {ITask} from "../DTO/Task";
-
 export class Entity {
 
   private static anemicInstanceToObject (obj: any) {
@@ -23,7 +21,7 @@ export class Entity {
     )
   }
 
-  toJson(): ITask {
+  toJson(): any {
     return Entity.mapValuesToPlainObjects(
       Entity.anemicInstanceToObject(this)
     )

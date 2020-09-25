@@ -1,4 +1,4 @@
-import UseCases from "../../../UseCases"
+import UseCases from "../../../Application/UseCases"
 import {COMPLETE_TASK, CREATE_TASK, LIST_TASK} from "./types"
 import {ITask} from "../../../DTO/Task"
 

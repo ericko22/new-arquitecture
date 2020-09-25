@@ -5,28 +5,29 @@ import {Factory} from "../../../Domain/Factory";
 
 export class TaskRepository implements ITaskRepository {
 
-  private dataSource: DataSource<Task>
+  private taskDataSource: DataSource<Task>
   private factory: Factory
 
-  constructor(dataSource: DataSource<Task>, factory: Factory) {
-    this.dataSource = dataSource
+  constructor(taskDataSource: DataSource<Task>, factory: Factory) {
+    this.taskDataSource = taskDataSource
     this.factory = factory
   }
 
   async changeStatus(taskId: string, status: boolean): Promise<Task> {
     const list = await this.get()
     const taskFound = list.find((task) => task.getId() === taskId)
-    const updated = await this.dataSource.update(taskId, {...taskFound, status})
+    const updated = await this.taskDataSource.update(taskId, {...taskFound, status})
     return this.factory.execute(updated)
   }
 
   async create(data: any): Promise<Task> {
-    const task = this.factory.execute(data)
-    return await this.dataSource.insert(task)
+    const task = this.factory.execute({...data, user: data.user})
+    console.log(task)
+    return await this.taskDataSource.insert(task)
   }
 
   async delete(taskId: string): Promise<void> {
-    await this.dataSource.delete(taskId)
+    await this.taskDataSource.delete(taskId)
   }
 
   async deleteComplete(): Promise<void> {
@@ -39,7 +40,7 @@ export class TaskRepository implements ITaskRepository {
   }
 
   async get(): Promise<Task[]> {
-    let list = await this.dataSource.get()
+    let list = await this.taskDataSource.get()
     list = list.map(task => this.factory.execute(task))
     return list
   }

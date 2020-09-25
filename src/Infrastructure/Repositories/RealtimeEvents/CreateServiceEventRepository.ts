@@ -1,14 +1,17 @@
-import { RealtimeEventsRepository } from './RealtimeEventsRepository'
+import {
+  RealtimeEmmitEventRepository,
+  RealtimeListenEventRepository
+} from './RealtimeListenAndEmmitEventsRepository'
 
-export class CreateServiceEventRepository implements RealtimeEventsRepository {
-  emmit(data: any): void {
-    throw new Error('Method not implemented.');
-  }
+export class CreateServiceEventRepository implements RealtimeListenEventRepository, RealtimeEmmitEventRepository {
+
   listen(): void {
-    throw new Error('Method not implemented.');
   }
+
   stopEvent(): void {
-    throw new Error('Method not implemented.');
+  }
+
+  emmit(data: any): void {
   }
 
 }

@@ -2,11 +2,11 @@ import {CreateTaskUseCase} from "./CreateTaskUseCase";
 import {GetTaskUseCase} from "./GetTaskUseCase";
 import { ChangeStatusUseCase } from "./ChangeStatusUseCase";
 import {CleanCompleteUseCase} from "./CleanCompleteUseCase";
-import {APITaskRepositoryFactory} from "../../Infrastructure/Repositories/Task/APITaskRepositoryFactory";
-// import {LocalStorageTaskRepositoryFactory} from "../../Infrastructure/Repositories/LocalStorageTaskRepositoryFactory";
+// import {APITaskRepositoryFactory} from "../../../Infrastructure/Repositories/Task/APITaskRepositoryFactory";
+import {LocalStorageTaskRepositoryFactory} from "../../../Infrastructure/Repositories/Task/LocalStorageTaskRepositoryFactory";
 
-const repository = APITaskRepositoryFactory.execute()
-// const repository = LocalStorageTaskRepositoryFactory.execute()
+// const repository = APITaskRepositoryFactory.execute()
+const repository = LocalStorageTaskRepositoryFactory.execute()
 
 const create = new CreateTaskUseCase(repository)
 const get = new GetTaskUseCase(repository)

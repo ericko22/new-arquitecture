@@ -1,4 +1,4 @@
-import {TaskEntityFactory} from "../../../Domain/Entities/TaskEntityFactory"
+import {TaskEntityFactory} from "../../../Domain/Entities/Task/TaskEntityFactory"
 import {TaskRepository} from "./TaskRepository"
 import {APIDataSource} from "../../DataSource/APIDataSource";
 
