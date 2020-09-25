@@ -1,29 +1,27 @@
 import {ITaskRepository} from "./ITaskRepository";
 import {DataSource} from "../../DataSource/DataSource";
 import {Task} from "../../../Domain/Entities/Task";
-import {TaskMapper} from "../../../Mappers/TaskMapper";
+import {Mapper} from "../../../Mappers/Mapper";
 
 export class TaskRepository implements ITaskRepository {
 
-  private taskDataSource: DataSource
+  private taskDataSource: DataSource<Task>
+  private mapper: Mapper<Task>
 
-  constructor(taskDataSource: DataSource) {
+  constructor(taskDataSource: DataSource<Task>, mapper: Mapper<Task>) {
     this.taskDataSource = taskDataSource
+    this.mapper = mapper
   }
 
   async changeStatus(taskId: string, status: boolean): Promise<Task> {
-    const list = await this.get()
-    let taskFound = list.find((task) => task.id === taskId)
-    if (taskFound) taskFound = TaskMapper.toPersistence(taskFound)
-    const updated = await this.taskDataSource.update(taskId, {...taskFound, status})
-    return TaskMapper.toDomain(updated)
+    const updated = await this.taskDataSource.update(taskId, {status})
+    return this.mapper.toDomain(updated)
   }
 
-  async create(data: any): Promise<Task> {
-    let task = TaskMapper.toDomain({...data, user: data.user})
-    task = TaskMapper.toPersistence(task)
-    const result = await this.taskDataSource.insert(task)
-    return TaskMapper.toDomain(result)
+  async create(task: Task): Promise<Task> {
+    const taskPersistence = this.mapper.toPersistence(task)
+    const result = await this.taskDataSource.insert(taskPersistence)
+    return this.mapper.toDomain(result)
   }
 
   async delete(taskId: string): Promise<void> {
@@ -41,7 +39,7 @@ export class TaskRepository implements ITaskRepository {
 
   async get(): Promise<Task[]> {
     let list = await this.taskDataSource.get()
-    list = list.map((task: any) => TaskMapper.toDomain(task))
+    list = list.map((task: any) => this.mapper.toDomain(task))
     return list
   }
 

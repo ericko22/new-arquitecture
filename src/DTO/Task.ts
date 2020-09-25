@@ -1,7 +1,6 @@
 import {IUser} from "./IUser";
-import {DTO} from "./DTO";
 
-export interface ITask extends DTO{
+export interface ITask{
   readonly id?: string
   readonly user: IUser
   readonly name: string

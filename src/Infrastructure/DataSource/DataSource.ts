@@ -1,23 +1,26 @@
 import {Entity} from "../../Domain/Entity";
+import {Mapper} from "../../Mappers/Mapper";
 
-export abstract class DataSource {
+export abstract class DataSource<T extends Entity> {
 
   protected referenceName: string
+  protected mapper: Mapper<T>
 
-  constructor(referenceName: string) {
+  constructor(referenceName: string, mapper: Mapper<T>) {
     this.referenceName = referenceName
+    this.mapper = mapper
   }
 
-  protected static instance: DataSource
+  protected static instance: DataSource<any>
 
   // @ts-ignore
-  static abstract getInstance(referenceName: string): DataSource
+  static abstract getInstance(referenceName: string, mapper: Mapper<T>): DataSource<T>
 
-  abstract insert(data: any): Promise<any>
+  abstract insert(data: T): Promise<any>
 
   abstract delete(taskId: string): void
 
-  abstract update(taskId: string, data: any): Promise<any>
+  abstract update(taskId: string, data: any): Promise<T | null>
 
-  abstract get(): Promise<any[]>
+  abstract get(): Promise<T[]>
 }

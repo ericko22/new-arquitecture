@@ -1,9 +1,11 @@
 import {UserRepository} from "./UserRepository";
+import {UserMapper} from "../../../Mappers/UserMapper";
 
 export class MemoryUserRepositoryFactory {
 
   static execute() {
-    return new UserRepository()
+    const mapper = new UserMapper()
+    return new UserRepository(mapper)
   }
 
 }

@@ -3,7 +3,7 @@ import {User} from "../Domain/Entities/User";
 import {IUser} from "../DTO/IUser";
 
 export class UserMapper extends Mapper<User> {
-  static toDTO(user: User): IUser {
+  toDTO(user: User): IUser {
     return {
       id: user.id,
       userName: user.userName,
@@ -11,12 +11,12 @@ export class UserMapper extends Mapper<User> {
     };
   }
 
-  static toDomain(raw: any): User {
+  toDomain(raw: any): User {
     return User.create(raw)
   }
 
-  static toPersistence(user: User): any {
-    return UserMapper.toDTO(user)
+  toPersistence(user: User): any {
+    return this.toDTO(user)
   }
 
 }

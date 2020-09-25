@@ -1,11 +1,13 @@
 import {LocalStorageDataSource} from "../../DataSource/LocalStorageDataSource"
 import {TaskRepository} from "./TaskRepository"
+import {TaskMapper} from "../../../Mappers/TaskMapper";
 
 export class LocalStorageTaskRepositoryFactory {
 
   static execute() {
-    const dataSource = LocalStorageDataSource.getInstance('tasks')
-    return new TaskRepository(dataSource)
+    const mapper = new TaskMapper()
+    const dataSource = LocalStorageDataSource.getInstance('tasks', mapper)
+    return new TaskRepository(dataSource, mapper)
   }
 
 }

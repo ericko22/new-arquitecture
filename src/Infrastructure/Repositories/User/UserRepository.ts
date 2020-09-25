@@ -1,6 +1,6 @@
 import {IUserRepository} from "./IUserRepository";
 import {User} from "../../../Domain/Entities/User";
-import {UserMapper} from "../../../Mappers/UserMapper";
+import {Mapper} from "../../../Mappers/Mapper";
 
 const user = {
   id: '1',
@@ -10,8 +10,14 @@ const user = {
 
 export class UserRepository implements IUserRepository{
 
+  mapper: Mapper<User>
+
+  constructor(mapper: Mapper<User>) {
+    this.mapper = mapper
+  }
+
   get(): User {
-    return UserMapper.toDomain(user)
+    return this.mapper.toDomain(user)
   }
 
 }
